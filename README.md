@@ -24,7 +24,7 @@ So when the spamming starts, the log shows you whether the source is a piece of 
 
 ## Demo
 
-![KeyIdentifier in action — physical keypresses labeled by device, software-injected keypresses labeled by source](demo.gif)
+![KeyIdentifier in action — physical keypresses labeled by device, software-injected keypresses labeled by source](docs/demo.gif)
 
 ## Build
 
