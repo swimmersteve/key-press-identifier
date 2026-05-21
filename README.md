@@ -22,6 +22,30 @@ KeyIdentifier runs two independent Windows input pipelines side-by-side and labe
 
 So when the spamming starts, the log shows you whether the source is a piece of hardware or a piece of software — and gives you enough information to narrow it further.
 
+## Demo
+
+![KeyIdentifier in action — physical keypress, then a SendKeys-injected keypress, labeled by source](docs/demo.gif)
+
+> Place the recording at `docs/demo.gif` (relative to this README). The image tag above will pick it up automatically once the file exists.
+
+**Recording the demo (~30 seconds):**
+
+The easiest tool on Windows is [ScreenToGif](https://www.screentogif.com) — free, native, records a region directly to `.gif`. Built-in alternative: `Win + G` (Game Bar) records `.mp4`, then convert with `ffmpeg -i in.mp4 -vf "fps=12,scale=900:-1:flags=lanczos" out.gif`.
+
+**What to show in the recording (script):**
+
+1. **(2 s)** Console window with the prompt `> KeyIdentifier.exe --no-color` typed but not yet executed.
+2. **(2 s)** Press Enter. The banner and the "Attached keyboards at startup" listing scroll past.
+3. **(5 s)** Press a few keys on the **physical** keyboard. Each press produces a `PHYSICAL DOWN` / `PHYSICAL UP` line with the device name and VID:PID highlighted.
+4. **(3 s)** Pause, then in a separate window run:
+   ```powershell
+   Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait("abc")
+   ```
+5. **(5 s)** Cut back to the KeyIdentifier console: three `INJECTED` events for `a`, `b`, `c`, each showing the foreground window, owning process, and suspect snapshot.
+6. **(2 s)** Press Ctrl+C to stop. Cursor returns to the prompt.
+
+The point of the demo is to show the **two distinct labels** — `PHYSICAL <device>` vs `INJECTED <source>` — and that they correctly identify the origin of each keystroke in real time.
+
 ## Build
 
 Requires only the in-box .NET Framework 4 compiler that ships with every supported version of Windows. No .NET SDK install needed.
